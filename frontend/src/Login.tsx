@@ -45,7 +45,6 @@ const LoginForm: React.FC = () => {
         email: formInputs.email,
       });
       const { token } = response.data;
-      console.log(response);
 
       if (response.status === 200) {
         localStorage.setItem("jwt", token);
@@ -141,10 +140,7 @@ const SignupForm: React.FC = () => {
         formInputs
       );
 
-      console.log(response);
-
       if (response.status === 201) {
-        console.log(response);
         setFormInputs({
           username: "",
           email: "",

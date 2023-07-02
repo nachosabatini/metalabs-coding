@@ -7,10 +7,10 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
-import Notes from "./Notes";
+import NotesPage from "./Notes";
 import LoginPage from "./Login";
 import { FC } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 const App: FC = () => {
   const checkAuthStatus = () => {
@@ -28,7 +28,7 @@ const App: FC = () => {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/notes" element={<PrivateRoute />}>
-          <Route path="/notes" element={<Notes />} />
+          <Route path="/notes" element={<NotesPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>

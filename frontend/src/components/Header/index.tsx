@@ -1,7 +1,7 @@
-import React from "react";
+import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Header: React.FC = () => {
+const Header: FC = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("jwt");

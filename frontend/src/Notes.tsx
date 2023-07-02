@@ -1,7 +1,8 @@
 import NotesList from "./components/NotesList";
 import Header from "./components/Header";
+import { FC } from "react";
 
-const Notes = () => {
+const NotesPage: FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4">
       <Header />
@@ -10,4 +11,4 @@ const Notes = () => {
   );
 };
 
-export default Notes;
+export default NotesPage;

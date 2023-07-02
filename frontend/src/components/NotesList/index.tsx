@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Search from "../Search";
 import axios from "axios";
 import Note, { NoteData } from "../Note";
 
-type Props = {};
-
-const NotesList = (props: Props) => {
+const NotesList: FC = () => {
   const [notes, setNotes] = useState<NoteData[]>([]);
   const [searchText, setSearchText] = useState("");
 

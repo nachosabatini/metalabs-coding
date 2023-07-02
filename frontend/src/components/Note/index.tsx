@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import clsx from "clsx";
 import { GoPencil, GoPaperclip, GoTrash } from "react-icons/go";
 
@@ -14,7 +14,7 @@ type NoteProps = {
   onDelete?: (noteId: number) => void;
 };
 
-const Note: React.FC<NoteProps> = ({ note, onSave, onDelete }) => {
+const Note: FC<NoteProps> = ({ note, onSave, onDelete }) => {
   const [noteInputs, setNoteInputs] = useState<NoteData>({
     title: "",
     content: "",
