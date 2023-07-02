@@ -20,7 +20,6 @@ const authorize = (roles: UserRole[]) => {
     try {
       // Get the JWT token from the request headers
       const token = req.headers.authorization?.split(" ")[1];
-      console.log(token);
 
       if (!token) {
         return res.status(401).json({ error: "Unauthorized" });

@@ -4,11 +4,13 @@ import sequelize from "./config/database";
 import notesRouter from "./routes/notes";
 import bodyParser from "body-parser";
 import authRouter from "./routes/auth";
+import cors from "cors";
 
 require("dotenv").config();
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 const port = 4000;
 
 // Create a connection pool to the PostgreSQL database
