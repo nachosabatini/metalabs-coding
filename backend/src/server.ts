@@ -1,10 +1,14 @@
 import express from "express";
 import { Pool } from "pg";
 import sequelize from "./config/database";
+import notesRouter from "./routes/notes";
+import bodyParser from "body-parser";
+import authRouter from "./routes/auth";
 
 require("dotenv").config();
 
 const app = express();
+app.use(bodyParser.json());
 const port = 4000;
 
 // Create a connection pool to the PostgreSQL database
@@ -15,6 +19,10 @@ const pool = new Pool({
   password: process.env.DB_PASSWORD || "admin",
   port: Number(process.env.DB_PORT) || 5432,
 });
+
+//Routes
+app.use("/api", notesRouter);
+app.use("/auth", authRouter);
 
 app.get("/", async (req, res) => {
   try {
