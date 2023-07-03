@@ -1,21 +1,16 @@
 import { useState, useEffect, FC } from "react";
 import clsx from "clsx";
 import { GoPencil, GoPaperclip, GoTrash } from "react-icons/go";
-
-export type NoteData = {
-  id?: number;
-  title: string;
-  content: string;
-};
+import { Note } from "../../types";
 
 type NoteProps = {
-  note?: NoteData;
-  onSave: (note: NoteData) => Promise<void>;
+  note?: Note;
+  onSave: (note: Note) => Promise<void>;
   onDelete?: (noteId: number) => void;
 };
 
-const Note: FC<NoteProps> = ({ note, onSave, onDelete }) => {
-  const [noteInputs, setNoteInputs] = useState<NoteData>({
+const NoteCard: FC<NoteProps> = ({ note, onSave, onDelete }) => {
+  const [noteInputs, setNoteInputs] = useState<Note>({
     title: "",
     content: "",
   });
@@ -99,4 +94,4 @@ const Note: FC<NoteProps> = ({ note, onSave, onDelete }) => {
   );
 };
 
-export default Note;
+export default NoteCard;

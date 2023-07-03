@@ -4,6 +4,7 @@ import sequelize from "./config/database";
 import notesRouter from "./routes/notes";
 import bodyParser from "body-parser";
 import authRouter from "./routes/auth";
+import userRoute from "./routes/user";
 import cors from "cors";
 
 require("dotenv").config();
@@ -25,6 +26,7 @@ const pool = new Pool({
 //Routes
 app.use("/api", notesRouter);
 app.use("/auth", authRouter);
+app.use("/api", userRoute);
 
 app.get("/", async (req, res) => {
   try {

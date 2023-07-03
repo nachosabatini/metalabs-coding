@@ -1,71 +1,21 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import Search from "../Search";
-import axios from "axios";
-import Note, { NoteData } from "../Note";
+import useNoteApi from "../../hooks/useNoteApi";
+import NoteCard from "../Note";
 
 const NotesList: FC = () => {
-  const [notes, setNotes] = useState<NoteData[]>([]);
+  const { notes, addNote, updateNote, deleteNote, loading } = useNoteApi();
   const [searchText, setSearchText] = useState("");
 
-  useEffect(() => {
-    fetchNotes();
-  }, []);
-
-  const fetchNotes = async () => {
-    try {
-      const jwtToken = localStorage.getItem("jwt");
-      const response = await axios.get(
-        `http://localhost:4000/api/notes/${jwtToken}`
-      );
-      setNotes(response.data);
-    } catch (error) {
-      console.error("Error fetching notes:", error);
-    }
-  };
-
-  const deleteNote = async (noteId: number) => {
-    try {
-      await axios.delete(`http://localhost:4000/api/notes/${noteId}`);
-      setNotes((prevNotes) => prevNotes.filter((note) => note.id !== noteId));
-    } catch (error) {
-      console.error("Error deleting note:", error);
-    }
-  };
-
-  const createNote = async (newNote: NoteData) => {
-    try {
-      const response = await axios.post("http://localhost:4000/api/notes", {
-        ...newNote,
-        token: localStorage.getItem("jwt"),
-      });
-
-      setNotes((prevNotes) => [...prevNotes, response.data]);
-    } catch (error) {
-      console.error("Error creating note:", error);
-    }
-  };
-
-  const editNote = async (updatedNote: NoteData) => {
-    try {
-      const response = await axios.put(
-        `http://localhost:4000/api/notes/${updatedNote.id}`,
-        updatedNote
-      );
-      setNotes((prevNotes) =>
-        prevNotes.map((note) =>
-          note.id === updatedNote.id ? response.data : note
-        )
-      );
-    } catch (error) {
-      console.error("Error editing note:", error);
-    }
-  };
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <section>
       <Search handleSearch={setSearchText} />
       <div className="grid gap-4 grid-cols-auto-fit p-4">
-        <Note onSave={createNote} />
+        <NoteCard onSave={addNote} />
         {notes
           .filter(
             (note) =>
@@ -73,10 +23,10 @@ const NotesList: FC = () => {
               note.content.toLowerCase().includes(searchText)
           )
           .map((note) => (
-            <Note
+            <NoteCard
               key={note.id}
               note={note}
-              onSave={editNote}
+              onSave={updateNote}
               onDelete={deleteNote}
             />
           ))}

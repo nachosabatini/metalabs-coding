@@ -1,13 +1,10 @@
-// src/middleware/authenticate.ts
-
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import User, { UserRole } from "../models/User";
 
-interface AuthenticateRequest extends Request {
+export interface AuthenticateRequest extends Request {
   user?: {
     id: number | undefined;
-    role: UserRole;
   };
 }
 
@@ -24,7 +21,6 @@ const authorize = (roles: UserRole[]) => {
         return res.status(401).json({ error: "Unauthorized" });
       }
 
-      // Verify and decode the JWT token
       const decodedToken = jwt.verify(
         token,
         process.env.JWT_SECRET as string
@@ -42,7 +38,7 @@ const authorize = (roles: UserRole[]) => {
         return res.status(403).json({ error: "Forbidden" });
       }
 
-      req.user = { id: user.id, role: user.role };
+      req.user = { id: user.id };
 
       next();
     } catch (error) {

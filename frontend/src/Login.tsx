@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "./hooks/AuthProvider";
 
 const LoginPage: FC = () => {
   return (
@@ -22,6 +23,7 @@ const LoginPage: FC = () => {
 };
 
 const LoginForm: React.FC = () => {
+  const { login, loading } = useAuth();
   const [formInputs, setFormInputs] = useState({
     email: "",
     password: "",
@@ -40,25 +42,16 @@ const LoginForm: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:4000/auth/login", {
-        password: formInputs.password,
-        email: formInputs.email,
+      await login(formInputs.email, formInputs.password);
+      setFormInputs({
+        email: "",
+        password: "",
       });
-      const { token } = response.data;
 
-      if (response.status === 200) {
-        localStorage.setItem("jwt", token);
-
-        setFormInputs({
-          email: "",
-          password: "",
-        });
-
-        toast.success("Login successful!");
-        setTimeout(() => {
-          navigate("/notes");
-        }, 1000);
-      }
+      toast.success("Login successful!");
+      setTimeout(() => {
+        navigate("/notes");
+      }, 1000);
     } catch (error) {
       toast.error("Invalid credentials");
       console.error("Login failed:", error);

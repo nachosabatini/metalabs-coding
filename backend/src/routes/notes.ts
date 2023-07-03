@@ -7,17 +7,9 @@ const router = express.Router();
 // GET /notes - Get all notes by user ID
 router.get("/notes/:id", async (req: Request, res: Response) => {
   try {
-    const token = req.params.id;
-
-    const decodedToken = jwt.verify(
-      token,
-      process.env.JWT_SECRET as string
-    ) as {
-      userId: number;
-    };
-
+    const id = req.params.id;
     const notes = await Note.findAll({
-      where: { userId: decodedToken.userId },
+      where: { userId: id },
     });
     res.json(notes);
   } catch (error) {
@@ -44,17 +36,13 @@ router.get("/notes/getOne/:id", async (req: Request, res: Response) => {
 
 // POST /notes - Create a new note
 router.post("/notes", async (req: Request, res: Response) => {
-  const { title, content, token } = req.body;
-
-  const decodedToken = jwt.verify(token, process.env.JWT_SECRET as string) as {
-    userId: number;
-  };
+  const { title, content, id } = req.body;
 
   try {
     const note = await Note.create({
       title,
       content,
-      userId: decodedToken.userId,
+      userId: id,
     });
     res.status(201).json(note);
   } catch (error) {
