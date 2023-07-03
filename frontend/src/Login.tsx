@@ -201,24 +201,6 @@ const SignupForm: React.FC = () => {
           required
         />
       </div>
-      <div className="mb-4">
-        <label
-          htmlFor="role"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Role
-        </label>
-        <select
-          name="role"
-          id="role"
-          className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-          value={formInputs.role}
-          onChange={handleInputChange}
-        >
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
-        </select>
-      </div>
       <div>
         <button
           type="submit"

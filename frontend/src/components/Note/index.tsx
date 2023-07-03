@@ -34,8 +34,12 @@ const NoteCard: FC<NoteProps> = ({ note, onSave, onDelete }) => {
   };
 
   const handleSaveClick = () => {
-    isEdit ? onSave({ ...noteInputs, id: note?.id }) : onSave(noteInputs);
-    setNoteInputs({ title: "", content: "" });
+    if (isEdit) {
+      onSave({ ...noteInputs, id: note?.id });
+    } else {
+      onSave(noteInputs);
+      setNoteInputs({ title: "", content: "" });
+    }
   };
 
   const handleDeleteClick = () => {
