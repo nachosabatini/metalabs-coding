@@ -10,7 +10,7 @@ import NotesPage from "./Notes";
 import LoginPage from "./Login";
 import { FC } from "react";
 import { ToastContainer } from "react-toastify";
-import { AuthProvider } from "./hooks/AuthProvider";
+import { AuthProvider } from "./providers/AuthProvider";
 
 const App: FC = () => {
   return (

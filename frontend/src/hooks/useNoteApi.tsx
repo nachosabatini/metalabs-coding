@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Note } from "../types";
-import { useAuth } from "./AuthProvider";
+import { useAuth } from "./useAuth";
 
 const useNoteApi = () => {
   const [notes, setNotes] = useState<Note[]>([]);

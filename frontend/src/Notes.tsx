@@ -1,13 +1,13 @@
 import NotesList from "./components/NotesList";
 import Header from "./components/Header";
 import { FC } from "react";
-import { useAuth } from "./hooks/AuthProvider";
+import { useAuth } from "./hooks/useAuth";
 import { Navigate } from "react-router-dom";
 
 const NotesPage: FC = () => {
-  const auth = useAuth();
+  const { isAuthenticated } = useAuth();
 
-  if (!auth.isAuthenticated()) {
+  if (!isAuthenticated()) {
     return <Navigate to="/login" replace />;
   }
   return (

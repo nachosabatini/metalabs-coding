@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useAuth } from "./hooks/AuthProvider";
+import { useAuth } from "./hooks/useAuth";
 
 const LoginPage: FC = () => {
   return (
@@ -23,7 +23,7 @@ const LoginPage: FC = () => {
 };
 
 const LoginForm: React.FC = () => {
-  const { login, loading } = useAuth();
+  const { login } = useAuth();
   const [formInputs, setFormInputs] = useState({
     email: "",
     password: "",

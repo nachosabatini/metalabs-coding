@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  PropsWithChildren,
-} from "react";
+import { createContext, useState, useEffect, PropsWithChildren } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -30,14 +24,25 @@ const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUser = () => {
-      const storedUser = localStorage.getItem("user");
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem("jwt");
 
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        const userResponse = await axios.get("http://localhost:4000/api/user");
+
+        if (userResponse) {
+          const { password, createdAt, updatedAt, ...user } = userResponse.data;
+          localStorage.setItem("user", JSON.stringify(user));
+          setUser(userResponse.data);
+        }
+
+        setLoading(false);
+      } catch (error) {
+        setUser(null);
+        localStorage.removeItem("user");
+        console.error(error);
       }
-
-      setLoading(false);
     };
 
     fetchUser();
@@ -53,12 +58,13 @@ const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
       localStorage.setItem("jwt", token);
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       const userResponse = await axios.get("http://localhost:4000/api/user");
-      const user = {
-        id: userResponse.data.id,
-        username: userResponse.data.username,
-        email: userResponse.data.email,
-        role: userResponse.data.role,
-      };
+      const {
+        password: userPassword,
+        createdAt,
+        updatedAt,
+        ...user
+      } = userResponse.data;
+
       localStorage.setItem("user", JSON.stringify(user));
       setUser(user);
     } catch (error) {
@@ -88,6 +94,4 @@ const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
   );
 };
 
-const useAuth = () => useContext(AuthContext);
-
-export { AuthProvider, useAuth };
+export { AuthProvider, AuthContext };

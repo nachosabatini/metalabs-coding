@@ -14,7 +14,7 @@ const NotesList: FC = () => {
   return (
     <section>
       <Search handleSearch={setSearchText} />
-      <div className="grid gap-4 grid-cols-auto-fit p-4">
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4">
         <NoteCard onSave={addNote} />
         {notes
           .filter(

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useAuth } from "../../hooks/AuthProvider";
+import { useAuth } from "../../hooks/useAuth";
 
 const Header: FC = () => {
   const { logout } = useAuth();
